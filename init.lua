@@ -607,7 +607,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'csharpier', -- Used to format Csharp code
+        'csharpier', -- Used to format csharp code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -653,7 +653,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        c_sharp = { 'csharpier' },
+        cs = { 'csharpier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
