@@ -15,10 +15,20 @@ return {
   },
   opts = {
     filesystem = {
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = false,
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
         },
+      },
+    },
+    buffers = {
+      follow_current_file = {
+        enabled = true,
+        leave_dirs_open = false,
       },
     },
   },
