@@ -160,6 +160,11 @@ vim.opt.scrolloff = 20
 -- Easier exiting insert mode
 vim.keymap.set('i', 'jj', '<Esc>')
 
+-- Git diffing and logging
+vim.keymap.set('n', '<leader>gl', ':DiffviewFileHistory<CR>', { desc = 'Open [G]it [L]og' })
+vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', { desc = 'Open [G]it [D]iff' })
+vim.keymap.set('n', '<leader>gc', ':DiffviewClose<CR>', { desc = '[C]lose [G]it View' })
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
