@@ -364,7 +364,10 @@ require('lazy').setup({
         --
         defaults = {
           mappings = {
-            i = { ['<C-d>'] = require('telescope.actions').delete_buffer },
+            i = {
+              ['<C-d>'] = require('telescope.actions').delete_buffer,
+              ['<C-s>'] = require('telescope.actions').file_vsplit,
+            },
           },
         },
         -- pickers = {}
