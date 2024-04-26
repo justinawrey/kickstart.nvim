@@ -160,6 +160,10 @@ vim.opt.scrolloff = 20
 -- Easier exiting insert mode
 vim.keymap.set('i', 'jj', '<Esc>')
 
+-- Easier navigation in chunks
+vim.keymap.set('n', '<S-j>', '8j')
+vim.keymap.set('n', '<S-k>', '8k')
+
 -- Git diffing and logging
 vim.keymap.set('n', '<leader>gl', ':DiffviewFileHistory<CR>', { desc = 'Open [G]it [L]og' })
 vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', { desc = 'Open [G]it [D]iff' })
@@ -367,6 +371,10 @@ require('lazy').setup({
             i = {
               ['<C-d>'] = require('telescope.actions').delete_buffer,
               ['<C-s>'] = require('telescope.actions').file_vsplit,
+              ['<C-j>'] = require('telescope.actions').move_selection_next,
+              ['<C-k>'] = require('telescope.actions').move_selection_previous,
+              ['<C-CR>'] = require('telescope.actions').file_edit,
+              ['<CR>'] = require('telescope.actions').file_edit,
             },
           },
         },
@@ -513,7 +521,7 @@ require('lazy').setup({
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          map('<C-h>', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -594,7 +602,8 @@ require('lazy').setup({
           },
         },
 
-        csharp_ls = {},
+        -- omnisharp seems to be better than csharp_ls in terms of speed
+        omnisharp = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -722,10 +731,10 @@ require('lazy').setup({
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          -- Select the [j]ext item
+          ['<C-j>'] = cmp.mapping.select_next_item(),
+          -- Select the [k]revious item
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -734,7 +743,9 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          -- Just in case you fat finger
+          ['<C-CR>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
