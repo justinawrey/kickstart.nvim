@@ -240,6 +240,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'sindrets/diffview.nvim',
+  'Hoffs/omnisharp-extended-lsp.nvim',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -603,7 +604,24 @@ require('lazy').setup({
         },
 
         -- omnisharp seems to be better than csharp_ls in terms of speed
-        omnisharp = {},
+        omnisharp = {
+          capabilities = {
+            workspace = {
+              -- so new files created are picked up by the ls
+              didChangeWatchedFiles = {
+                dynamicRegistration = true,
+              },
+            },
+          },
+          -- extended lsp for decompilation of files in external dlls
+          -- TODO: this doesnt work?
+          handlers = {
+            ['textDocument/definition'] = require('omnisharp_extended').definition_handler,
+            ['textDocument/typeDefinition'] = require('omnisharp_extended').type_definition_handler,
+            ['textDocument/references'] = require('omnisharp_extended').references_handler,
+            ['textDocument/implementation'] = require('omnisharp_extended').implementation_handler,
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
