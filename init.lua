@@ -202,6 +202,14 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- TODO: Deno specific, this needs to leave this file.
+vim.api.nvim_create_user_command('DenoRun', function()
+  local bufname = '"' .. vim.api.nvim_buf_get_name(0) .. '"'
+  vim.cmd('!deno run ' .. bufname)
+end, {})
+
+vim.keymap.set('n', 'drf', '<cmd>DenoRun<CR>', { desc = '[Run] current [F]ile with [D]eno' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -375,7 +383,6 @@ require('lazy').setup({
               ['<C-j>'] = require('telescope.actions').move_selection_next,
               ['<C-k>'] = require('telescope.actions').move_selection_previous,
               ['<C-CR>'] = require('telescope.actions').file_edit,
-              ['<CR>'] = require('telescope.actions').file_edit,
             },
           },
         },
@@ -586,7 +593,7 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
-        --
+        denols = {},
 
         lua_ls = {
           -- cmd = {...},
